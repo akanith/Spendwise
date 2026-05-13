@@ -1,0 +1,172 @@
+// ─── Dashboard KPI Cards ─────────────────────────────────────────────────────
+export const dashboardStats = [
+  {
+    id: 1,
+    label: 'Total Monthly Spend',
+    value: '₹12,45,000',
+    trend: '+8%',
+    trendType: 'up',
+    subtext: 'vs. last month',
+    icon: 'Wallet',
+  },
+  {
+    id: 2,
+    label: 'Budget Remaining',
+    value: '₹4,20,000',
+    trend: '-6%',
+    trendType: 'down',
+    subtext: 'Across 8 departments',
+    icon: 'PieChart',
+  },
+  {
+    id: 3,
+    label: 'Pending Approvals',
+    value: '18',
+    trend: null,
+    trendType: null,
+    subtext: 'Requires your attention',
+    icon: 'ClipboardCheck',
+  },
+  {
+    id: 4,
+    label: 'Expense Growth %',
+    value: '7.2%',
+    trend: '+0.6%',
+    trendType: 'up',
+    subtext: 'Above quarterly target',
+    icon: 'TrendingUp',
+  },
+];
+
+// ─── Monthly Spend Trend (FY 2024–25, values in ₹) ──────────────────────────
+export const monthlySpendTrend = [
+  { name: 'Apr', spend: 840000 },
+  { name: 'May', spend: 920000 },
+  { name: 'Jun', spend: 880000 },
+  { name: 'Jul', spend: 1050000 },
+  { name: 'Aug', spend: 1240000 },
+  { name: 'Sep', spend: 1480000 },
+  { name: 'Oct', spend: 1680000 },
+  { name: 'Nov', spend: 1520000 },
+  { name: 'Dec', spend: 1380000 },
+  { name: 'Jan', spend: 1650000 },
+  { name: 'Feb', spend: 1420000 },
+  { name: 'Mar', spend: 1245000 },
+];
+
+// ─── Spending Categories ─────────────────────────────────────────────────────
+export const spendingCategories = [
+  { name: 'Travel & Stay',     value: 38, color: '#4F46E5' },
+  { name: 'Software/SaaS',     value: 24, color: '#818CF8' },
+  { name: 'Vendor Payments',   value: 18, color: '#C7D2FE' },
+  { name: 'Marketing',         value: 12, color: '#E0E7FF' },
+  { name: 'Other',             value: 8,  color: '#F1F5F9' },
+];
+
+// ─── Recent Transactions ─────────────────────────────────────────────────────
+export const recentTransactions = [
+  {
+    id: 1,
+    employee: { name: 'Priya Sharma',   dept: 'Sales & Marketing', avatar: 'PS' },
+    category: 'Travel & Business',
+    amount: '₹14,500',
+    date: '24 Oct 2024',
+    status: 'Approved',
+    paymentMethod: 'HDFC Business Card',
+    gst: '18%',
+  },
+  {
+    id: 2,
+    employee: { name: 'Arjun Mehta',    dept: 'Engineering',       avatar: 'AM' },
+    category: 'Software Subscription',
+    amount: '₹8,900',
+    date: '23 Oct 2024',
+    status: 'Pending',
+    paymentMethod: 'Corporate UPI',
+    gst: '18%',
+  },
+  {
+    id: 3,
+    employee: { name: 'Sunita Rao',     dept: 'Marketing',         avatar: 'SR' },
+    category: 'Ad Campaign',
+    amount: '₹42,000',
+    date: '22 Oct 2024',
+    status: 'Rejected',
+    paymentMethod: 'ICICI Corporate Card',
+    gst: '18%',
+  },
+  {
+    id: 4,
+    employee: { name: 'Rahul Gupta',    dept: 'Operations',        avatar: 'RG' },
+    category: 'Vendor Payment',
+    amount: '₹25,000',
+    date: '21 Oct 2024',
+    status: 'Approved',
+    paymentMethod: 'Bank Transfer',
+    gst: '12%',
+  },
+  {
+    id: 5,
+    employee: { name: 'Kavita Nair',    dept: 'Finance',           avatar: 'KN' },
+    category: 'GST Compliance',
+    amount: '₹18,000',
+    date: '20 Oct 2024',
+    status: 'Approved',
+    paymentMethod: 'Razorpay Business',
+    gst: 'Exempt',
+  },
+  {
+    id: 6,
+    employee: { name: 'Vikram Singh',   dept: 'Engineering',       avatar: 'VS' },
+    category: 'Cloud Infrastructure',
+    amount: '₹85,000',
+    date: '19 Oct 2024',
+    status: 'Pending',
+    paymentMethod: 'Corporate UPI',
+    gst: '18%',
+  },
+];
+
+// ─── Budget Breakdown ────────────────────────────────────────────────────────
+export const budgetBreakdown = [
+  {
+    id: 1,
+    department: 'Engineering',
+    costCenter: '200',
+    allocated: '₹85,00,000',
+    actual: '₹58,40,000',
+    remaining: '₹26,60,000',
+    utilization: 68,
+    status: 'Healthy',
+  },
+  {
+    id: 2,
+    department: 'Operations',
+    costCenter: '104',
+    allocated: '₹32,00,000',
+    actual: '₹28,48,000',
+    remaining: '₹3,52,000',
+    utilization: 89,
+    status: 'Warning',
+  },
+  {
+    id: 3,
+    department: 'Marketing',
+    costCenter: '101',
+    allocated: '₹45,00,000',
+    actual: '₹48,50,000',
+    remaining: '-₹3,50,000',
+    utilization: 107,
+    status: 'Over Budget',
+  },
+  {
+    id: 4,
+    department: 'Sales',
+    costCenter: '102',
+    allocated: '₹60,00,000',
+    actual: '₹49,20,000',
+    remaining: '₹10,80,000',
+    utilization: 82,
+    status: 'Healthy',
+  },
+];

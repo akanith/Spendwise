@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-spendwise-background text-spendwise-text-primary font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  .enterprise-card {
+    @apply bg-white border border-spendwise-border rounded-xl shadow-card p-6 transition-all duration-300;
+  }
+
+  .enterprise-card-hover {
+    @apply hover:shadow-card-hover hover:-translate-y-1;
+  }
+
+  .enterprise-shadow {
+    @apply shadow-enterprise;
+  }
+
+  .skeleton {
+    @apply relative overflow-hidden bg-slate-100 rounded-lg;
+  }
+
+  .skeleton::after {
+    @apply absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shimmer;
+    content: '';
+  }
+
+  .interactive-button {
+    @apply active:scale-[0.98] transition-transform duration-100;
+  }
+
+  .status-badge {
+    @apply px-2.5 py-0.5 rounded-full text-xs font-medium border;
+  }
+
+  .status-approved {
+    @apply bg-spendwise-status-success-bg text-spendwise-status-success-text border-spendwise-status-success-border;
+  }
+
+  .status-pending {
+    @apply bg-spendwise-status-warning-bg text-spendwise-status-warning-text border-spendwise-status-warning-border;
+  }
+
+  .status-rejected {
+    @apply bg-spendwise-status-danger-bg text-spendwise-status-danger-text border-spendwise-status-danger-border;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-200 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-300;
+}
