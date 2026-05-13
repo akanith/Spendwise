@@ -1,16 +1,52 @@
-# React + Vite
+# Spendwise — AI-Powered Expense Management Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Spendwise is a modern enterprise finance dashboard designed for expense tracking, budget monitoring, analytics, and team expense management.
 
-Currently, two official plugins are available:
+## Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+https://spendwisedashboard.netlify.app/
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* Executive finance dashboard
+* Budget tracking and monitoring
+* Expense analytics and reporting
+* Team spend management
+* AI-powered insights
+* Interactive charts and tables
+* Responsive enterprise UI
+* Indian currency localization (₹)
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+* React JS
+* React Router
+* Recharts
+* Framer Motion
+* Lucide React
+* Vanilla CSS
+
+## Pages
+
+* Dashboard
+* Budgets
+* Reports & Insights
+* Team Spend
+* Add Expense
+* User Profile
+
+## Design Focus
+
+* Enterprise SaaS UX
+* Information hierarchy
+* Financial readability
+* Reusable UI components
+* Professional dashboard aesthetics
+
+## Screenshots
+
+(Add screenshots here)
+
+## Author
+
+A.K. Anith
