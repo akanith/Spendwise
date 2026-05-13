@@ -22,9 +22,9 @@ const DEFAULT_DATA = [
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-slate-900 text-white px-4 py-2.5 rounded-xl shadow-xl text-xs font-bold">
-        <p className="text-slate-400 uppercase tracking-widest text-[9px] mb-1">{label}</p>
-        <p className="text-white text-sm">${payload[0].value.toLocaleString()}</p>
+      <div className="bg-spendwise-text-primary text-white px-4 py-3 rounded-2xl shadow-xl border border-white/10 backdrop-blur-sm">
+        <p className="text-spendwise-text-muted uppercase tracking-widest text-[9px] font-black mb-1">{label}</p>
+        <p className="text-white text-base font-black font-outfit">₹{payload[0].value.toLocaleString()}</p>
       </div>
     );
   }
@@ -32,29 +32,42 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 const SpendTrendChart = ({ data }) => {
-  // Use provided data or fall back to defaults; never pass empty to recharts
   const chartData = data && data.length > 0 ? data : DEFAULT_DATA;
 
   return (
     <div className="h-[300px] w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={chartData} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
-          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F5F9" />
+        <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+          <CartesianGrid strokeDasharray="0" vertical={false} stroke="#F1F5F9" />
           <XAxis
             dataKey="name"
             axisLine={false}
             tickLine={false}
-            tick={{ fill: '#94A3B8', fontSize: 12, fontWeight: 600 }}
-            dy={10}
+            tick={{ fill: '#64748B', fontSize: 11, fontWeight: 700 }}
+            dy={15}
           />
-          <YAxis hide />
-          <Tooltip content={<CustomTooltip />} cursor={{ fill: '#F8FAFC' }} />
-          <Bar dataKey="spend" radius={[6, 6, 0, 0]} barSize={52} isAnimationActive={true} animationDuration={800}>
+          <YAxis 
+            axisLine={false} 
+            tickLine={false} 
+            tick={{ fill: '#94A3B8', fontSize: 10, fontWeight: 600 }}
+          />
+          <Tooltip 
+            content={<CustomTooltip />} 
+            cursor={{ fill: '#F1F5F9', radius: 12 }} 
+          />
+          <Bar 
+            dataKey="spend" 
+            radius={[8, 8, 8, 8]} 
+            barSize={44} 
+            animationDuration={1500}
+            animationBegin={300}
+          >
             {chartData.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
                 fill={index === chartData.length - 1 ? '#4F46E5' : '#818CF8'}
-                fillOpacity={0.55 + index * 0.07}
+                fillOpacity={0.4 + (index / chartData.length) * 0.6}
+                className="transition-all duration-300 hover:fill-opacity-100"
               />
             ))}
           </Bar>

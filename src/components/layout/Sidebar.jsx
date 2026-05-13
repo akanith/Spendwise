@@ -35,16 +35,16 @@ const Sidebar = () => {
       className="h-screen bg-white border-r border-spendwise-border flex flex-col fixed left-0 top-0 z-50 overflow-hidden"
     >
       {/* Logo Section */}
-      <div className={`p-6 mb-4 flex items-center ${isCollapsed ? 'justify-center' : 'justify-between'}`}>
+      <div className={`p-6 mb-2 flex items-center ${isCollapsed ? 'justify-center' : 'justify-between'}`}>
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-spendwise-primary rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-200 shrink-0">
+          <div className="w-10 h-10 bg-spendwise-primary rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-100 shrink-0">
             <div className="w-4 h-4 bg-white rounded-sm"></div>
           </div>
           {!isCollapsed && (
             <motion.span 
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
-              className="text-2xl font-black text-spendwise-primary font-outfit tracking-tighter"
+              className="text-2xl font-black text-spendwise-primary font-outfit tracking-tighter uppercase"
             >
               Spendwise
             </motion.span>
@@ -54,7 +54,7 @@ const Sidebar = () => {
         {!isCollapsed && (
           <button 
             onClick={() => setIsCollapsed(true)}
-            className="p-1.5 hover:bg-slate-50 rounded-lg text-spendwise-text-muted transition-colors"
+            className="p-2 hover:bg-slate-50 rounded-xl text-spendwise-text-muted transition-colors active:scale-95"
           >
             <ChevronLeft size={18} />
           </button>
@@ -64,14 +64,14 @@ const Sidebar = () => {
       {isCollapsed && (
         <button 
           onClick={() => setIsCollapsed(false)}
-          className="mx-auto mb-6 p-2 hover:bg-slate-50 rounded-xl text-spendwise-primary transition-colors"
+          className="mx-auto mb-4 p-2.5 hover:bg-slate-50 rounded-2xl text-spendwise-primary transition-colors active:scale-95"
         >
           <Menu size={24} />
         </button>
       )}
 
       {/* Navigation */}
-      <nav className="flex-1 px-4 space-y-2">
+      <nav className="flex-1 px-4 space-y-1">
         {navItems.map((item) => (
           <NavLink
             key={item.id}
@@ -84,23 +84,23 @@ const Sidebar = () => {
                 : 'text-spendwise-text-secondary hover:bg-slate-50 hover:text-spendwise-text-primary'}
             `}
           >
-            <item.icon size={22} className="shrink-0" />
+            <item.icon size={20} className={`shrink-0 transition-transform duration-300 ${isCollapsed ? 'group-hover:scale-110' : ''}`} />
             {!isCollapsed && (
               <motion.span 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="font-bold text-sm"
+                className="font-bold text-[13px] uppercase tracking-wider"
               >
                 {item.label}
               </motion.span>
             )}
             
-            {/* Active Glow */}
-            <AnimatePresence>
-              {isCollapsed && (
-                <div className="absolute left-0 w-1 h-6 bg-spendwise-primary rounded-r-full hidden group-[.active]:block" />
-              )}
-            </AnimatePresence>
+            {/* Active Indicator for Collapsed */}
+            {isCollapsed && (
+              <AnimatePresence>
+                <div className="absolute left-0 w-1.5 h-8 bg-spendwise-primary rounded-r-full scale-0 group-[.active]:scale-100 transition-transform" />
+              </AnimatePresence>
+            )}
           </NavLink>
         ))}
       </nav>
@@ -109,9 +109,9 @@ const Sidebar = () => {
       <div className="p-4 mt-auto">
         <div className={`
           bg-slate-50 border border-spendwise-border rounded-2xl transition-all duration-300
-          ${isCollapsed ? 'p-2 flex flex-col items-center gap-4' : 'p-4 flex items-center gap-3'}
+          ${isCollapsed ? 'p-2 flex flex-col items-center gap-4' : 'p-3 flex items-center gap-3'}
         `}>
-          <div className="w-10 h-10 rounded-full bg-white overflow-hidden shrink-0 border-2 border-white shadow-enterprise">
+          <div className="w-10 h-10 rounded-xl bg-white overflow-hidden shrink-0 border-2 border-white shadow-enterprise">
              <img 
               src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" 
               alt="User" 
@@ -121,12 +121,12 @@ const Sidebar = () => {
           
           {!isCollapsed && (
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-black text-spendwise-text-primary truncate uppercase tracking-tighter">Rajesh Kumar</p>
-              <p className="text-[10px] font-bold text-spendwise-text-muted truncate uppercase">Finance Admin</p>
+              <p className="text-xs font-black text-spendwise-text-primary truncate uppercase tracking-tight">Rajesh Kumar</p>
+              <p className="text-[10px] font-bold text-spendwise-primary truncate uppercase tracking-widest">Finance Admin</p>
             </div>
           )}
           
-          <button className="text-spendwise-text-muted hover:text-spendwise-primary transition-colors">
+          <button className="text-spendwise-text-muted hover:text-spendwise-primary transition-colors p-1 active:scale-95">
             <Settings size={18} />
           </button>
         </div>

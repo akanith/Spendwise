@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import {
   Upload, X, CheckCircle2, ChevronDown,
   Calendar as CalendarIcon, Info, Loader2, FileText,
@@ -6,6 +6,9 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { useToast } from '../context/ToastContext';
 import { api } from '../services/api';
+import PageHeader from '../components/common/PageHeader';
+import Card from '../components/common/Card';
+import Button from '../components/common/Button';
 
 const AddExpense = () => {
   const { showToast } = useToast();
@@ -47,20 +50,16 @@ const AddExpense = () => {
   };
 
   return (
-    <div className="space-y-8 max-w-6xl mx-auto pb-20">
+    <div className="section-spacing">
       {/* Page Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-black text-spendwise-text-primary font-outfit tracking-tight">Add New Expense</h1>
-          <p className="text-spendwise-text-secondary mt-1 text-sm font-medium leading-relaxed max-w-xl">
-            Record business expenditures with AI-assisted GST invoice scanning. Our engine automatically extracts vendor details, GSTIN, and amount from uploaded invoices.
-          </p>
-        </div>
-      </div>
+      <PageHeader 
+        title="Add New Expense" 
+        description="Record business expenditures with AI-assisted GST invoice scanning. Our engine automatically extracts vendor details, GSTIN, and amount from uploaded invoices."
+      />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
         {/* Left: Upload & Preview */}
-        <div className="space-y-8 sticky top-28">
+        <div className="space-y-6 lg:sticky lg:top-28">
           <motion.div
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
@@ -73,22 +72,24 @@ const AddExpense = () => {
               <Upload size={36} />
             </div>
             <h4 className="text-xl font-black text-spendwise-text-primary mb-2">Drop your GST invoice here</h4>
-            <p className="text-sm font-medium text-spendwise-text-muted">or click to browse (PDF, JPG, PNG)</p>
+            <p className="text-sm font-bold text-spendwise-text-muted">or click to browse (PDF, JPG, PNG)</p>
           </motion.div>
 
           <AnimatePresence>
             {hasFile && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }}
-                className="enterprise-card !p-0 overflow-hidden shadow-2xl"
+                className="enterprise-card !p-0 overflow-hidden shadow-2xl rounded-[32px]"
               >
-                <div className="p-4 border-b border-slate-50 flex justify-between items-center bg-white">
-                  <div className="flex items-center gap-2">
-                    <FileText size={16} className="text-spendwise-primary" />
+                <div className="p-5 border-b border-slate-50 flex justify-between items-center bg-white">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center">
+                      <FileText size={16} className="text-spendwise-primary" />
+                    </div>
                     <span className="text-[10px] font-black uppercase tracking-widest text-spendwise-text-primary">gst_invoice_oct2024.pdf</span>
                   </div>
-                  <button onClick={() => setHasFile(false)} className="text-red-500 hover:bg-red-50 p-1.5 rounded-xl transition-all">
-                    <X size={16} />
+                  <button onClick={() => setHasFile(false)} className="text-red-500 hover:bg-red-50 p-2 rounded-xl transition-all">
+                    <X size={18} />
                   </button>
                 </div>
                 <div className="relative aspect-[4/5] bg-slate-100 overflow-hidden">
@@ -107,7 +108,7 @@ const AddExpense = () => {
                         <div className="h-2 bg-white/20 rounded-full overflow-hidden">
                           <motion.div className="h-full bg-spendwise-primary shadow-[0_0_20px_rgba(79,70,229,0.5)]" initial={{ width: 0 }} animate={{ width: `${uploadProgress}%` }} />
                         </div>
-                        <p className="text-[10px] text-white/60 font-bold uppercase tracking-widest">Extracting GSTIN & vendor details...</p>
+                        <p className="text-[10px] text-white/60 font-black uppercase tracking-[0.15em] mt-2">Extracting GSTIN & vendor details...</p>
                       </div>
                     </div>
                   )}
@@ -118,125 +119,124 @@ const AddExpense = () => {
         </div>
 
         {/* Right: Form */}
-        <div className="enterprise-card space-y-8 shadow-2xl shadow-slate-100">
-          <div className="space-y-3">
-            <label className="text-[10px] font-black uppercase tracking-widest text-spendwise-text-muted flex items-center gap-2">
-              Expense Title <Info size={12} className="text-spendwise-text-muted/40" />
-            </label>
-            <input
-              type="text"
-              placeholder="e.g. Client Dinner – The Oberoi, Mumbai"
-              className="w-full bg-slate-50/50 border-2 border-transparent rounded-2xl px-5 py-4 text-sm font-bold text-spendwise-text-primary focus:bg-white focus:border-spendwise-primary/10 focus:ring-4 focus:ring-spendwise-primary/5 outline-none transition-all"
-            />
-          </div>
+        <Card className="shadow-2xl shadow-slate-100 p-8">
+          <form onSubmit={handleSubmit} className="space-y-8">
+            <div className="space-y-3">
+              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-spendwise-text-muted flex items-center gap-2">
+                Expense Title <Info size={12} className="text-spendwise-text-muted/40" />
+              </label>
+              <input
+                type="text"
+                placeholder="e.g. Client Dinner – The Oberoi, Mumbai"
+                className="w-full bg-slate-50/50 border-2 border-transparent rounded-2xl px-6 py-4.5 text-sm font-black text-spendwise-text-primary focus:bg-white focus:border-spendwise-primary/20 focus:ring-4 focus:ring-spendwise-primary/5 outline-none transition-all placeholder:text-slate-300"
+              />
+            </div>
 
-          <div className="grid grid-cols-2 gap-6">
-            <div className="space-y-3">
-              <label className="text-[10px] font-black uppercase tracking-widest text-spendwise-text-muted">Amount (₹)</label>
-              <div className="relative group">
-                <span className="absolute left-5 top-1/2 -translate-y-1/2 font-black text-spendwise-text-muted group-focus-within:text-spendwise-primary transition-colors">₹</span>
-                <input type="text" placeholder="0.00"
-                  className="w-full bg-slate-50/50 border-2 border-transparent rounded-2xl px-10 py-4 text-sm font-black text-spendwise-text-primary focus:bg-white focus:border-spendwise-primary/10 focus:ring-4 focus:ring-spendwise-primary/5 outline-none transition-all" />
+            <div className="grid grid-cols-2 gap-6">
+              <div className="space-y-3">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-spendwise-text-muted">Amount (₹)</label>
+                <div className="relative group">
+                  <span className="absolute left-6 top-1/2 -translate-y-1/2 font-black text-spendwise-text-muted group-focus-within:text-spendwise-primary transition-colors">₹</span>
+                  <input type="text" placeholder="0.00"
+                    className="w-full bg-slate-50/50 border-2 border-transparent rounded-2xl px-12 py-4.5 text-sm font-black text-spendwise-text-primary focus:bg-white focus:border-spendwise-primary/20 focus:ring-4 focus:ring-spendwise-primary/5 outline-none transition-all placeholder:text-slate-300" />
+                </div>
+              </div>
+              <div className="space-y-3">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-spendwise-text-muted">Category</label>
+                <div className="relative">
+                  <select className="w-full bg-slate-50/50 border-2 border-transparent rounded-2xl px-6 py-4.5 text-sm font-black text-spendwise-text-primary appearance-none outline-none focus:bg-white focus:border-spendwise-primary/20 focus:ring-4 focus:ring-spendwise-primary/5 transition-all cursor-pointer">
+                    <option>Select Category</option>
+                    <option>Meals & Entertainment</option>
+                    <option>Domestic Travel</option>
+                    <option>International Travel</option>
+                    <option>Hotel & Accommodation</option>
+                    <option>Software / SaaS</option>
+                    <option>Marketing & Ads</option>
+                    <option>Vendor Payment</option>
+                    <option>GST Compliance</option>
+                    <option>Office Supplies</option>
+                  </select>
+                  <ChevronDown size={16} className="absolute right-6 top-1/2 -translate-y-1/2 text-spendwise-text-muted pointer-events-none" />
+                </div>
               </div>
             </div>
-            <div className="space-y-3">
-              <label className="text-[10px] font-black uppercase tracking-widest text-spendwise-text-muted">Category</label>
-              <div className="relative">
-                <select className="w-full bg-slate-50/50 border-2 border-transparent rounded-2xl px-5 py-4 text-sm font-bold text-spendwise-text-primary appearance-none outline-none focus:bg-white focus:border-spendwise-primary/10 focus:ring-4 focus:ring-spendwise-primary/5 transition-all cursor-pointer">
-                  <option>Select Category</option>
-                  <option>Meals &amp; Entertainment</option>
-                  <option>Domestic Travel</option>
-                  <option>International Travel</option>
-                  <option>Hotel &amp; Accommodation</option>
-                  <option>Software / SaaS</option>
-                  <option>Marketing &amp; Ads</option>
-                  <option>Vendor Payment</option>
-                  <option>GST Compliance</option>
-                  <option>Office Supplies</option>
-                </select>
-                <ChevronDown size={16} className="absolute right-5 top-1/2 -translate-y-1/2 text-spendwise-text-muted pointer-events-none" />
-              </div>
-            </div>
-          </div>
 
-          <div className="grid grid-cols-2 gap-6">
-            <div className="space-y-3">
-              <label className="text-[10px] font-black uppercase tracking-widest text-spendwise-text-muted">Department</label>
-              <div className="relative">
-                <select className="w-full bg-slate-50/50 border-2 border-transparent rounded-2xl px-5 py-4 text-sm font-bold text-spendwise-text-primary appearance-none outline-none focus:bg-white focus:border-spendwise-primary/10 focus:ring-4 focus:ring-spendwise-primary/5 transition-all cursor-pointer">
-                  <option>Sales &amp; Marketing</option>
-                  <option>Engineering</option>
-                  <option>Operations</option>
-                  <option>Finance</option>
-                  <option>Human Resources</option>
-                  <option>Customer Success</option>
-                </select>
-                <ChevronDown size={16} className="absolute right-5 top-1/2 -translate-y-1/2 text-spendwise-text-muted pointer-events-none" />
+            <div className="grid grid-cols-2 gap-6">
+              <div className="space-y-3">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-spendwise-text-muted">Department</label>
+                <div className="relative">
+                  <select className="w-full bg-slate-50/50 border-2 border-transparent rounded-2xl px-6 py-4.5 text-sm font-black text-spendwise-text-primary appearance-none outline-none focus:bg-white focus:border-spendwise-primary/20 focus:ring-4 focus:ring-spendwise-primary/5 transition-all cursor-pointer">
+                    <option>Sales & Marketing</option>
+                    <option>Engineering</option>
+                    <option>Operations</option>
+                    <option>Finance</option>
+                    <option>Human Resources</option>
+                    <option>Customer Success</option>
+                  </select>
+                  <ChevronDown size={16} className="absolute right-6 top-1/2 -translate-y-1/2 text-spendwise-text-muted pointer-events-none" />
+                </div>
+              </div>
+              <div className="space-y-3">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-spendwise-text-muted">Date</label>
+                <div className="relative group">
+                  <CalendarIcon size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-spendwise-text-muted group-focus-within:text-spendwise-primary transition-colors" />
+                  <input type="date"
+                    className="w-full bg-slate-50/50 border-2 border-transparent rounded-2xl px-14 py-4.5 text-sm font-black text-spendwise-text-primary outline-none focus:bg-white focus:border-spendwise-primary/20 focus:ring-4 focus:ring-spendwise-primary/5 transition-all" />
+                </div>
               </div>
             </div>
-            <div className="space-y-3">
-              <label className="text-[10px] font-black uppercase tracking-widest text-spendwise-text-muted">Date (DD/MM/YYYY)</label>
-              <div className="relative group">
-                <CalendarIcon size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-spendwise-text-muted group-focus-within:text-spendwise-primary transition-colors" />
-                <input type="date"
-                  className="w-full bg-slate-50/50 border-2 border-transparent rounded-2xl px-12 py-4 text-sm font-bold text-spendwise-text-primary outline-none focus:bg-white focus:border-spendwise-primary/10 focus:ring-4 focus:ring-spendwise-primary/5 transition-all" />
-              </div>
-            </div>
-          </div>
 
-          <div className="grid grid-cols-2 gap-6">
-            <div className="space-y-3">
-              <label className="text-[10px] font-black uppercase tracking-widest text-spendwise-text-muted">Payment Method</label>
-              <div className="relative">
-                <select className="w-full bg-slate-50/50 border-2 border-transparent rounded-2xl px-5 py-4 text-sm font-bold text-spendwise-text-primary appearance-none outline-none focus:bg-white focus:border-spendwise-primary/10 focus:ring-4 focus:ring-spendwise-primary/5 transition-all cursor-pointer">
-                  <option>Corporate UPI</option>
-                  <option>HDFC Business Card</option>
-                  <option>ICICI Corporate Card</option>
-                  <option>Bank Transfer (NEFT/RTGS)</option>
-                  <option>Razorpay Business</option>
-                  <option>Cash (Petty Cash)</option>
-                </select>
-                <ChevronDown size={16} className="absolute right-5 top-1/2 -translate-y-1/2 text-spendwise-text-muted pointer-events-none" />
+            <div className="grid grid-cols-2 gap-6">
+              <div className="space-y-3">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-spendwise-text-muted">Payment Method</label>
+                <div className="relative">
+                  <select className="w-full bg-slate-50/50 border-2 border-transparent rounded-2xl px-6 py-4.5 text-sm font-black text-spendwise-text-primary appearance-none outline-none focus:bg-white focus:border-spendwise-primary/20 focus:ring-4 focus:ring-spendwise-primary/5 transition-all cursor-pointer">
+                    <option>Corporate UPI</option>
+                    <option>HDFC Business Card</option>
+                    <option>ICICI Corporate Card</option>
+                    <option>Bank Transfer (NEFT/RTGS)</option>
+                    <option>Razorpay Business</option>
+                    <option>Cash (Petty Cash)</option>
+                  </select>
+                  <ChevronDown size={16} className="absolute right-6 top-1/2 -translate-y-1/2 text-spendwise-text-muted pointer-events-none" />
+                </div>
+              </div>
+              <div className="space-y-3">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-spendwise-text-muted">GST Rate</label>
+                <div className="relative">
+                  <select className="w-full bg-slate-50/50 border-2 border-transparent rounded-2xl px-6 py-4.5 text-sm font-black text-spendwise-text-primary appearance-none outline-none focus:bg-white focus:border-spendwise-primary/20 focus:ring-4 focus:ring-spendwise-primary/5 transition-all cursor-pointer">
+                    <option>18% GST</option>
+                    <option>12% GST</option>
+                    <option>5% GST</option>
+                    <option>0% / Exempt</option>
+                    <option>Composite</option>
+                  </select>
+                  <ChevronDown size={16} className="absolute right-6 top-1/2 -translate-y-1/2 text-spendwise-text-muted pointer-events-none" />
+                </div>
               </div>
             </div>
+
             <div className="space-y-3">
-              <label className="text-[10px] font-black uppercase tracking-widest text-spendwise-text-muted">GST Rate</label>
-              <div className="relative">
-                <select className="w-full bg-slate-50/50 border-2 border-transparent rounded-2xl px-5 py-4 text-sm font-bold text-spendwise-text-primary appearance-none outline-none focus:bg-white focus:border-spendwise-primary/10 focus:ring-4 focus:ring-spendwise-primary/5 transition-all cursor-pointer">
-                  <option>18% GST</option>
-                  <option>12% GST</option>
-                  <option>5% GST</option>
-                  <option>0% / Exempt</option>
-                  <option>Composite</option>
-                </select>
-                <ChevronDown size={16} className="absolute right-5 top-1/2 -translate-y-1/2 text-spendwise-text-muted pointer-events-none" />
-              </div>
+              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-spendwise-text-muted">Notes / Business Justification</label>
+              <textarea
+                placeholder="Provide business purpose and any GST input credit justification for the finance team..."
+                className="w-full bg-slate-50/50 border-2 border-transparent rounded-2xl px-6 py-5 text-sm font-bold text-spendwise-text-primary min-h-[140px] focus:bg-white focus:border-spendwise-primary/20 focus:ring-4 focus:ring-spendwise-primary/5 outline-none transition-all resize-none placeholder:text-slate-300"
+              />
             </div>
-          </div>
 
-          <div className="space-y-3">
-            <label className="text-[10px] font-black uppercase tracking-widest text-spendwise-text-muted">Notes / Business Justification</label>
-            <textarea
-              placeholder="Provide business purpose and any GST input credit justification for the finance team..."
-              className="w-full bg-slate-50/50 border-2 border-transparent rounded-2xl px-5 py-5 text-sm font-medium text-spendwise-text-primary min-h-[120px] focus:bg-white focus:border-spendwise-primary/10 focus:ring-4 focus:ring-spendwise-primary/5 outline-none transition-all resize-none"
-            />
-          </div>
-
-          <div className="flex gap-4 pt-6">
-            <button className="flex-1 bg-white border-2 border-slate-100 py-4 rounded-2xl text-sm font-black uppercase tracking-widest text-spendwise-text-primary hover:bg-slate-50 transition-all interactive-button">
-              Save Draft
-            </button>
-            <button
-              onClick={handleSubmit}
-              disabled={isSubmitting}
-              className="flex-[2] bg-spendwise-primary text-white py-4 rounded-2xl text-sm font-black uppercase tracking-widest shadow-xl shadow-indigo-100 hover:bg-indigo-700 transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3 interactive-button"
-            >
-              {isSubmitting ? (
-                <><Loader2 size={18} className="animate-spin" /> Submitting...</>
-              ) : 'Submit for Approval'}
-            </button>
-          </div>
-        </div>
+            <div className="flex gap-4 pt-4">
+              <Button variant="secondary" className="flex-1 py-5 rounded-[20px]">Save Draft</Button>
+              <Button
+                type="submit"
+                className="flex-[2] py-5 rounded-[20px]"
+                disabled={isSubmitting}
+                icon={isSubmitting ? Loader2 : null}
+              >
+                {isSubmitting ? 'Submitting...' : 'Submit for Approval'}
+              </Button>
+            </div>
+          </form>
+        </Card>
       </div>
     </div>
   );

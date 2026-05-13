@@ -1,26 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --sidebar-width: 256px;
+  }
+
   body {
-    @apply bg-spendwise-background text-spendwise-text-primary font-sans antialiased;
+    @apply bg-spendwise-background text-spendwise-text-primary font-sans antialiased selection:bg-spendwise-primary/10 selection:text-spendwise-primary;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold tracking-tight;
+    @apply font-outfit tracking-tight text-spendwise-text-primary;
   }
+
+  h1 { @apply text-4xl font-black; }
+  h2 { @apply text-2xl font-extrabold; }
+  h3 { @apply text-xl font-bold; }
+  h4 { @apply text-lg font-bold; }
 }
 
 @layer components {
   .enterprise-card {
-    @apply bg-white border border-spendwise-border rounded-xl shadow-card p-6 transition-all duration-300;
+    @apply bg-white border border-spendwise-border rounded-2xl shadow-card p-6 transition-all duration-300;
   }
 
   .enterprise-card-hover {
-    @apply hover:shadow-card-hover hover:-translate-y-1;
+    @apply hover:shadow-card-hover hover:-translate-y-0.5;
   }
 
   .enterprise-shadow {
@@ -37,11 +46,11 @@
   }
 
   .interactive-button {
-    @apply active:scale-[0.98] transition-transform duration-100;
+    @apply active:scale-[0.98] transition-all duration-100;
   }
 
   .status-badge {
-    @apply px-2.5 py-0.5 rounded-full text-xs font-medium border;
+    @apply px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border;
   }
 
   .status-approved {
@@ -54,6 +63,14 @@
 
   .status-rejected {
     @apply bg-spendwise-status-danger-bg text-spendwise-status-danger-text border-spendwise-status-danger-border;
+  }
+
+  .section-spacing {
+    @apply space-y-8;
+  }
+
+  .grid-spacing {
+    @apply gap-6;
   }
 }
 
@@ -68,9 +85,16 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-slate-200 rounded-full;
+  @apply bg-slate-200 rounded-full hover:bg-slate-300 transition-colors;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-slate-300;
+/* Recharts Customizations */
+.recharts-tooltip-cursor {
+  fill: #F1F5F9 !important;
 }
+
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: #F1F5F9 !important;
+}
+

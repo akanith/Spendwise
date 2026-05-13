@@ -9,23 +9,19 @@ const DEFAULT_DATA = [
   { name: 'Other', value: 5, color: '#F1F5F9' },
 ];
 
-const CustomTooltip = ({ active, payload }) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="bg-slate-900 text-white px-4 py-2.5 rounded-xl shadow-xl text-xs font-bold">
-        <p className="text-slate-400 text-[9px] uppercase tracking-widest mb-1">{payload[0].name}</p>
-        <p>{payload[0].value}%</p>
-      </div>
-    );
-  }
-  return null;
-};
-
 const CategoryDonutChart = ({ data }) => {
-  const chartData = data && data.length > 0 ? data : DEFAULT_DATA;
+  // Default fallback data if none provided
+  const chartData = data || [
+    { name: 'Travel & Stay', value: 38 },
+    { name: 'Software/SaaS', value: 24 },
+    { name: 'Vendor Payments', value: 18 },
+    { name: 'Others', value: 20 },
+  ];
+
+  const COLORS = ['#4F46E5', '#818CF8', '#C7D2FE', '#E2E8F0'];
 
   return (
-    <div className="h-[220px] w-full relative">
+    <div className="h-[240px] w-full relative">
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie
@@ -33,24 +29,43 @@ const CategoryDonutChart = ({ data }) => {
             cx="50%"
             cy="50%"
             innerRadius={65}
-            outerRadius={90}
-            paddingAngle={3}
+            outerRadius={95}
+            paddingAngle={6}
             dataKey="value"
-            isAnimationActive={true}
-            animationDuration={800}
+            animationDuration={1500}
+            animationBegin={300}
           >
             {chartData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.color} stroke="none" />
+              <Cell 
+                key={`cell-${index}`} 
+                fill={COLORS[index % COLORS.length]} 
+                stroke="white"
+                strokeWidth={2}
+                className="hover:opacity-80 transition-opacity cursor-pointer outline-none"
+              />
             ))}
           </Pie>
-          <Tooltip content={<CustomTooltip />} />
+          <Tooltip 
+            contentStyle={{ 
+              borderRadius: '16px', 
+              border: 'none', 
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+              padding: '12px 16px'
+            }}
+            itemStyle={{
+              fontSize: '12px',
+              fontWeight: 'bold',
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em'
+            }}
+          />
         </PieChart>
       </ResponsiveContainer>
-
+      
       {/* Center Label */}
       <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-        <span className="text-2xl font-black text-spendwise-text-primary">$124k</span>
-        <span className="text-[10px] text-spendwise-text-muted uppercase tracking-widest font-bold">Total</span>
+        <span className="text-[10px] font-black text-spendwise-text-muted uppercase tracking-[0.2em] mb-1">Total</span>
+        <span className="text-2xl font-black text-spendwise-text-primary font-outfit leading-none">100%</span>
       </div>
     </div>
   );
