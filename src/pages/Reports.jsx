@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import {
   Download, Plus, FileText, Calendar, ChevronLeft, ChevronRight,
   Eye, Trash2, RefreshCcw, CheckCircle2, AlertTriangle, Settings2, Clock,
@@ -11,9 +12,25 @@ import EmptyState from '../components/common/EmptyState';
 import StatCard from '../components/common/StatCard';
 import Button from '../components/common/Button';
 import ReportsSpendChart from '../components/charts/ReportsSpendChart';
+import { monthlySpendTrend } from '../data/mockData';
 
-const Reports = () => {
   const [period, setPeriod] = useState('Monthly');
+
+  // Logic to handle Quarterly aggregation
+  const getChartData = () => {
+    if (period === 'Monthly') return monthlySpendTrend;
+    
+    // Aggregate by Quarters (Apr-Jun, Jul-Sep, Oct-Dec, Jan-Mar)
+    const quarters = [
+      { name: 'Q1', spend: monthlySpendTrend.slice(0, 3).reduce((acc, curr) => acc + curr.spend, 0) },
+      { name: 'Q2', spend: monthlySpendTrend.slice(3, 6).reduce((acc, curr) => acc + curr.spend, 0) },
+      { name: 'Q3', spend: monthlySpendTrend.slice(6, 9).reduce((acc, curr) => acc + curr.spend, 0) },
+      { name: 'Q4', spend: monthlySpendTrend.slice(9, 12).reduce((acc, curr) => acc + curr.spend, 0) },
+    ];
+    return quarters;
+  };
+
+  const chartData = getChartData();
 
   const statCards = [
     { label: 'Total Spend', value: '₹4.2Cr', trend: '+12%', trendType: 'up', subtext: 'VS LAST MONTH', icon: 'Wallet' },
@@ -93,7 +110,7 @@ const Reports = () => {
             </div>
           }
         >
-          <ReportsSpendChart period={period} />
+          <ReportsSpendChart data={chartData} activeIndex={period === 'Monthly' ? 6 : 2} />
         </Card>
 
         {/* Financial Calendar */}
