@@ -14,6 +14,7 @@ import Button from '../components/common/Button';
 import ReportsSpendChart from '../components/charts/ReportsSpendChart';
 import { monthlySpendTrend } from '../data/mockData';
 
+const Reports = () => {
   const [period, setPeriod] = useState('Monthly');
 
   // Logic to handle Quarterly aggregation
